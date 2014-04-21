@@ -8,7 +8,9 @@ import org.apache.log4j.Logger;
  * @author Aleksey Permyakov
  */
 public class Utils {
+    private static int _uniqueId = 0;
     private static final Logger LOGGER = Logger.getLogger(Utils.class);
+
     public static <T> T or(T source, T target){
         return source == null ? target : source;
     }
@@ -27,5 +29,9 @@ public class Utils {
             return null;
         }
         return (T) activity.findViewById(id);
+    }
+
+    public static int makeID() {
+        return _uniqueId++;
     }
 }

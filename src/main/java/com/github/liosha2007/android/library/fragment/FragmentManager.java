@@ -1,10 +1,15 @@
 package com.github.liosha2007.android.library.fragment;
 
+import android.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.github.liosha2007.android.library.application.ApplicationActivity;
+
 import org.apache.log4j.Logger;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -13,7 +18,7 @@ import java.util.HashMap;
 public class FragmentManager extends FragmentPagerAdapter {
     private static final Logger LOGGER = Logger.getLogger(FragmentManager.class);
     private static HashMap<Integer, Fragment> key2fragments = new HashMap<Integer, Fragment>();
-    private static FragmentManager adapter;
+    public static FragmentManager adapter;
     private static ViewPager viewPager;
 
     protected FragmentManager(android.support.v4.app.FragmentManager fm) {
@@ -43,6 +48,10 @@ public class FragmentManager extends FragmentPagerAdapter {
         return true;
     }
 
+    protected android.support.v4.app.FragmentManager fragmentManager(){
+        return ApplicationActivity.activity.getSupportFragmentManager();
+    }
+
     @Override
     public Fragment getItem(int i) {
         return key2fragments.values().toArray(new Fragment[key2fragments.size()])[i];
@@ -53,9 +62,33 @@ public class FragmentManager extends FragmentPagerAdapter {
         return key2fragments.size();
     }
 
+    public void addFragment(int key, Fragment fragment){
+        key2fragments.put(key, fragment);
+
+    }
+
+    public void removeFragment(int key){
+        Fragment fragment = key2fragments.get(key);
+        key2fragments.remove(key);
+
+
+//        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager().beginTransaction();
+//        fragmentTransaction.remove(fragmentManager().findFragmentById(fragment.getId())).commit();
+    }
+
+    public int indexOf(int key) {
+        return viewPager.getAdapter().getItemPosition(key2fragments.get(key));
+    }
+
     public void setCurrentItem(int itemIndex){
         FragmentManager.viewPager.setCurrentItem(itemIndex);
     }
+//
+//    public int getCurrentItem(){
+//        android.support.v4.app.FragmentManager fragmentManager = ApplicationActivity.activity.getSupportFragmentManager();
+//        fr
+//        return viewPager.getAdapter().getItemPosition(key2fragments.get(key))
+//    }
 
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener){
         FragmentManager.viewPager.setOnPageChangeListener(onPageChangeListener);

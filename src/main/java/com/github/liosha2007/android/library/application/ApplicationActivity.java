@@ -30,10 +30,12 @@ public class ApplicationActivity extends FragmentActivity {
      *
      * @return
      */
-    public static final boolean initialize(int viewerPagerId){
+    public static final boolean initialize(int activityLayout, int viewerPagerId){
         if (activity == null){
             return false;
         }
+        activity.setContentView(activityLayout);
+
         viewPager = Utils.view(activity, viewerPagerId);
         FragmentManager.initialize(activity.getSupportFragmentManager(), viewPager);
         return true;
