@@ -21,7 +21,7 @@ public abstract class ApplicationActivity extends FragmentActivity {
     private int _mainLayout;
     private int _viewPager;
 
-    protected ApplicationActivity(int mainLayout, int viewPager){
+    protected ApplicationActivity(int mainLayout, int viewPager) {
         super();
         _mainLayout = mainLayout;
         _viewPager = viewPager;
@@ -54,7 +54,6 @@ public abstract class ApplicationActivity extends FragmentActivity {
     }
 
     /**
-     *
      * @return
      */
     public static IBackPressed getBackPressed() {
@@ -62,7 +61,6 @@ public abstract class ApplicationActivity extends FragmentActivity {
     }
 
     /**
-     *
      * @param backPressed
      */
     public static void setBackPressed(IBackPressed backPressed) {

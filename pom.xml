@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.liosha2007.android</groupId>
@@ -117,62 +117,62 @@
             <build>
                 <plugins>
                     <!--<plugin>-->
-                        <!--<groupId>com.github.wvengen</groupId>-->
-                        <!--<artifactId>proguard-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>proguard</id>-->
-                                <!--<phase>package</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>proguard</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                        <!--<configuration>-->
-                            <!--<options>-->
-                                <!--<option>-keep class !com.groupdocs.annotation.** { *; }</option>-->
-                                <!--<option>-keep public class com.groupdocs.annotation.config.** { *; }</option>-->
-                                <!--<option>-keep public class com.groupdocs.annotation.domain.request.** {  *; }</option>-->
-                                <!--<option>-keep public class com.groupdocs.annotation.domain.response.** {  *; }</option>-->
-                                <!--<option>-keep public class com.groupdocs.annotation.domain.* {  *; }</option>-->
-                                <!--<option>-keep public class com.groupdocs.annotation.handler.* {  *; }</option>-->
-                                <!--<option>-keep public class com.groupdocs.annotation.service.* {  *; }</option>-->
-                                <!--<option>-keep public class com.groupdocs.annotation.utils.* {  *; }</option>-->
-                                <!--<option>-keep class a.** { *; }</option>-->
-                                <!--<option>-keep class groupdocs.viewer.** { *; }</option>-->
-                                <!--<option>-keep class aspose.** { *; }</option>-->
-                                <!--<option>-keep class asposewobfuscated.** { *; }</option>-->
-                                <!--<option>-keep class ch.** { *; }</option>-->
-                                <!--<option>-keep class javax.** { *; }</option>-->
-                                <!--<option>-keep class net.** { *; }</option>-->
-                                <!--<option>-keep class org.** { *; }</option>-->
-                                <!--<option>-keep class org.joda.time.** { *; }</option>-->
-                                <!--<option>-keep class org.joda.convert.** { *; }</option>-->
-                                <!--<option>-dontnote</option>-->
-                                <!--<option>-ignorewarnings</option>-->
-                                <!--<option>-dontoptimize</option>-->
-                                <!--<option>-dontshrink</option>-->
-                                <!--<option>-dontpreverify</option>-->
-                                <!--<option>-keepattributes</option>-->
-                            <!--</options>-->
-                            <!--<libs>-->
-                                <!--<lib>${java.bootstrap.classes}</lib>-->
-                                <!--<lib>${java.cryptographic.extension.classes}</lib>-->
-                                <!--<lib>${java.secure.socket.extension.classes}</lib>-->
-                            <!--</libs>-->
-                            <!--<obfuscate>true</obfuscate>-->
-                            <!--<injar>${project.build.finalName}.jar</injar>-->
-                            <!--<outjar>${project.build.finalName}-fat-final-${build.number}.jar</outjar>-->
-                            <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
-                        <!--</configuration>-->
-                        <!--<dependencies>-->
-                            <!--<dependency>-->
-                                <!--<groupId>net.sf.proguard</groupId>-->
-                                <!--<artifactId>proguard-base</artifactId>-->
-                                <!--<version>4.10</version>-->
-                                <!--<scope>runtime</scope>-->
-                            <!--</dependency>-->
-                        <!--</dependencies>-->
+                    <!--<groupId>com.github.wvengen</groupId>-->
+                    <!--<artifactId>proguard-maven-plugin</artifactId>-->
+                    <!--<executions>-->
+                    <!--<execution>-->
+                    <!--<id>proguard</id>-->
+                    <!--<phase>package</phase>-->
+                    <!--<goals>-->
+                    <!--<goal>proguard</goal>-->
+                    <!--</goals>-->
+                    <!--</execution>-->
+                    <!--</executions>-->
+                    <!--<configuration>-->
+                    <!--<options>-->
+                    <!--<option>-keep class !com.groupdocs.annotation.** { *; }</option>-->
+                    <!--<option>-keep public class com.groupdocs.annotation.config.** { *; }</option>-->
+                    <!--<option>-keep public class com.groupdocs.annotation.domain.request.** {  *; }</option>-->
+                    <!--<option>-keep public class com.groupdocs.annotation.domain.response.** {  *; }</option>-->
+                    <!--<option>-keep public class com.groupdocs.annotation.domain.* {  *; }</option>-->
+                    <!--<option>-keep public class com.groupdocs.annotation.handler.* {  *; }</option>-->
+                    <!--<option>-keep public class com.groupdocs.annotation.service.* {  *; }</option>-->
+                    <!--<option>-keep public class com.groupdocs.annotation.utils.* {  *; }</option>-->
+                    <!--<option>-keep class a.** { *; }</option>-->
+                    <!--<option>-keep class groupdocs.viewer.** { *; }</option>-->
+                    <!--<option>-keep class aspose.** { *; }</option>-->
+                    <!--<option>-keep class asposewobfuscated.** { *; }</option>-->
+                    <!--<option>-keep class ch.** { *; }</option>-->
+                    <!--<option>-keep class javax.** { *; }</option>-->
+                    <!--<option>-keep class net.** { *; }</option>-->
+                    <!--<option>-keep class org.** { *; }</option>-->
+                    <!--<option>-keep class org.joda.time.** { *; }</option>-->
+                    <!--<option>-keep class org.joda.convert.** { *; }</option>-->
+                    <!--<option>-dontnote</option>-->
+                    <!--<option>-ignorewarnings</option>-->
+                    <!--<option>-dontoptimize</option>-->
+                    <!--<option>-dontshrink</option>-->
+                    <!--<option>-dontpreverify</option>-->
+                    <!--<option>-keepattributes</option>-->
+                    <!--</options>-->
+                    <!--<libs>-->
+                    <!--<lib>${java.bootstrap.classes}</lib>-->
+                    <!--<lib>${java.cryptographic.extension.classes}</lib>-->
+                    <!--<lib>${java.secure.socket.extension.classes}</lib>-->
+                    <!--</libs>-->
+                    <!--<obfuscate>true</obfuscate>-->
+                    <!--<injar>${project.build.finalName}.jar</injar>-->
+                    <!--<outjar>${project.build.finalName}-fat-final-${build.number}.jar</outjar>-->
+                    <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
+                    <!--</configuration>-->
+                    <!--<dependencies>-->
+                    <!--<dependency>-->
+                    <!--<groupId>net.sf.proguard</groupId>-->
+                    <!--<artifactId>proguard-base</artifactId>-->
+                    <!--<version>4.10</version>-->
+                    <!--<scope>runtime</scope>-->
+                    <!--</dependency>-->
+                    <!--</dependencies>-->
                     <!--</plugin>-->
                 </plugins>
             </build>

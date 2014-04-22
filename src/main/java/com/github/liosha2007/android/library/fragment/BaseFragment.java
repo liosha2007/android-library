@@ -40,12 +40,13 @@ public abstract class BaseFragment<T extends BaseController> extends Fragment {
 
     /**
      * Get View by ID
+     *
      * @param id
      * @param <T>
      * @return
      */
     public <T extends View> T view(int id) {
-        if (view == null){
+        if (view == null) {
             LOGGER.error("view is null");
             return null;
         }
@@ -54,6 +55,7 @@ public abstract class BaseFragment<T extends BaseController> extends Fragment {
 
     /**
      * Fix for bug
+     *
      * @param outState
      */
     @Override
