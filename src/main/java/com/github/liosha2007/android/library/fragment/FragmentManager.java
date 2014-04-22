@@ -7,16 +7,14 @@ import com.github.liosha2007.android.library.application.ApplicationActivity;
 import org.apache.log4j.Logger;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 
 /**
  * @author Aleksey Permyakov
  */
 public class FragmentManager extends FragmentPagerAdapter {
     private static final Logger LOGGER = Logger.getLogger(FragmentManager.class);
-    private static HashMap<Integer, Fragment> key2fragments = new HashMap<Integer, Fragment>();
+    private static LinkedHashMap<Integer, Fragment> key2fragments = new LinkedHashMap<Integer, Fragment>();
     public static FragmentManager adapter;
     private static ViewPager viewPager;
 
@@ -51,9 +49,7 @@ public class FragmentManager extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        List<Fragment> fragments = Arrays.asList(key2fragments.values().toArray(new Fragment[key2fragments.size()]).clone());
-        Collections.reverse(fragments);
-        return fragments.get(i);
+        return Arrays.asList(key2fragments.values().toArray(new Fragment[key2fragments.size()]).clone()).get(i);
     }
 
     @Override
@@ -79,8 +75,12 @@ public class FragmentManager extends FragmentPagerAdapter {
         return viewPager.getAdapter().getItemPosition(key2fragments.get(key));
     }
 
-    public void setCurrentItem(int itemIndex) {
-        FragmentManager.viewPager.setCurrentItem(itemIndex);
+    /**
+     * Set fragment as active using key
+     * @param key fragment key
+     */
+    public void setCurrentItem(int key) {
+        FragmentManager.viewPager.setCurrentItem(Arrays.asList(key2fragments.keySet().toArray(new Integer[key2fragments.size()])).indexOf(key));
     }
 //
 //    public int getCurrentItem(){
@@ -93,3 +93,9 @@ public class FragmentManager extends FragmentPagerAdapter {
         FragmentManager.viewPager.setOnPageChangeListener(onPageChangeListener);
     }
 }
+
+//FragmentManager fm = getFragmentManager();
+//fm.beginTransaction()
+//        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+//        .show(somefrag)
+//        .commit();
