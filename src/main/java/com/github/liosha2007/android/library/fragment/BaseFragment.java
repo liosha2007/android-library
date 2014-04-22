@@ -6,18 +6,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.liosha2007.android.library.common.Utils;
+import com.github.liosha2007.android.library.controller.BaseController;
 import org.apache.log4j.Logger;
 
 /**
  * @author Aleksey Permyakov
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment<T extends BaseController> extends Fragment {
     private static final Logger LOGGER = Logger.getLogger(BaseFragment.class);
     protected View view;
+    protected final T controller;
+    private int layoutId;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, int layoutId) {
-        return (this.view = inflater.inflate(layoutId, container, false));
+    protected BaseFragment(int layoutId, T controller) {
+        this.layoutId = layoutId;
+        this.controller = controller;
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return (this.view = inflater.inflate(this.layoutId, container, false));
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        controller.initialize(view, savedInstanceState, this);
+        controller.onViewCreated(savedInstanceState);
+        onViewCreated(view);
+    }
+
+    public abstract void onViewCreated(View view);
 
     /**
      * Get View by ID

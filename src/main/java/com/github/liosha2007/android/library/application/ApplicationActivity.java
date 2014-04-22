@@ -1,5 +1,6 @@
 package com.github.liosha2007.android.library.application;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import com.github.liosha2007.android.library.common.Utils;
@@ -10,36 +11,36 @@ import org.apache.log4j.Logger;
 /**
  * @author Aleksey Permyakov
  */
-public class ApplicationActivity extends FragmentActivity {
+public abstract class ApplicationActivity extends FragmentActivity {
     private static final Logger LOGGER = Logger.getLogger(ApplicationActivity.class);
 
     public static ApplicationActivity activity;
 
     protected static ViewPager viewPager;
     protected static IBackPressed backPressed;
+    private int _mainLayout;
+    private int _viewPager;
 
-    public ApplicationActivity(){
+    protected ApplicationActivity(int mainLayout, int viewPager){
         super();
+        _mainLayout = mainLayout;
+        _viewPager = viewPager;
         if (activity != null) {
             LOGGER.error("activity created more that one time");
         }
         activity = this;
     }
 
-    /**
-     *
-     * @return
-     */
-    public static final boolean initialize(int activityLayout, int viewerPagerId){
-        if (activity == null){
-            return false;
-        }
-        activity.setContentView(activityLayout);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        viewPager = Utils.view(activity, viewerPagerId);
-        FragmentManager.initialize(activity.getSupportFragmentManager(), viewPager);
-        return true;
+        activity.setContentView(_mainLayout);
+        FragmentManager.initialize(activity.getSupportFragmentManager(), (viewPager = Utils.view(activity, _viewPager)));
+        onFragmentCreate(FragmentManager.adapter);
     }
+
+    protected abstract void onFragmentCreate(FragmentManager adapter);
 
     /**
      *
