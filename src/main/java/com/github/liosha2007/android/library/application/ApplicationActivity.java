@@ -6,14 +6,11 @@ import android.support.v4.view.ViewPager;
 import com.github.liosha2007.android.library.common.Utils;
 import com.github.liosha2007.android.library.fragment.FragmentManager;
 import com.github.liosha2007.android.library.interfaces.IBackPressed;
-import org.apache.log4j.Logger;
 
 /**
  * @author Aleksey Permyakov
  */
 public abstract class ApplicationActivity extends FragmentActivity {
-    private static final Logger LOGGER = Logger.getLogger(ApplicationActivity.class);
-
     public static ApplicationActivity activity;
 
     protected static ViewPager viewPager;
@@ -26,7 +23,7 @@ public abstract class ApplicationActivity extends FragmentActivity {
         _mainLayout = mainLayout;
         _viewPager = viewPager;
         if (activity != null) {
-            LOGGER.error("activity created more that one time");
+            Utils.err("activity created more that one time");
         }
         activity = this;
     }
