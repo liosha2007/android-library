@@ -1,6 +1,8 @@
 package com.github.liosha2007.android.library.common;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import com.google.gson.Gson;
@@ -88,5 +90,20 @@ public class Utils {
 
     public static void deb(String error_message) {
         Log.d(TAG, error_message);
+    }
+
+    public static Drawable loadImageFromAssets(Context context, String assetsPath){
+        InputStream inputStream = null;
+        try {
+            // get input stream
+            inputStream = context.getAssets().open(assetsPath);
+            // load image as Drawable
+            return Drawable.createFromStream(inputStream, null);
+        } catch (Exception e) {
+            Utils.deb("error loading image from assets: " + e.getMessage());
+        } finally {
+            Utils.closeStreams(inputStream);
+        }
+        return null;
     }
 }
