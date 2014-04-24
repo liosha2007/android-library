@@ -29,6 +29,12 @@ public abstract class BaseFragment<T extends BaseController> extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        controller.onStart();
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller.initialize(view, savedInstanceState, this);

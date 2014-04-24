@@ -15,4 +15,14 @@ public abstract class BaseController<T extends BaseFragment> {
     }
 
     public abstract void onViewCreated(Bundle savedInstanceState);
+
+    /**
+     * Will ba called when Fragment.onStart is called
+     */
+    public void onStart(){}
+
+    /**
+     * Will be called when fragment sets as current
+     */
+    public void onShowed() {}
 }

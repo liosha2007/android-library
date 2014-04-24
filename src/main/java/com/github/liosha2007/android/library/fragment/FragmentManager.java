@@ -59,7 +59,6 @@ public class FragmentManager extends FragmentPagerAdapter {
 
     public void addFragment(int key, Fragment fragment) {
         key2fragments.put(key, fragment);
-
     }
 
     public void removeFragment(int key) {
@@ -81,6 +80,10 @@ public class FragmentManager extends FragmentPagerAdapter {
      */
     public void setCurrentItem(int key) {
         FragmentManager.viewPager.setCurrentItem(Arrays.asList(key2fragments.keySet().toArray(new Integer[key2fragments.size()])).indexOf(key));
+        Fragment fragment = key2fragments.get(key);
+        if (fragment != null && fragment instanceof BaseFragment){
+            ((BaseFragment)fragment).controller.onShowed();
+        }
     }
 //
 //    public int getCurrentItem(){
