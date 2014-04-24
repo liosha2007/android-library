@@ -62,12 +62,7 @@ public class FragmentManager extends FragmentPagerAdapter {
     }
 
     public void removeFragment(int key) {
-        Fragment fragment = key2fragments.get(key);
         key2fragments.remove(key);
-
-
-//        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager().beginTransaction();
-//        fragmentTransaction.remove(fragmentManager().findFragmentById(fragment.getId())).commit();
     }
 
     public int indexOf(int key) {
@@ -80,10 +75,6 @@ public class FragmentManager extends FragmentPagerAdapter {
      */
     public void setCurrentItem(int key) {
         FragmentManager.viewPager.setCurrentItem(Arrays.asList(key2fragments.keySet().toArray(new Integer[key2fragments.size()])).indexOf(key));
-        Fragment fragment = key2fragments.get(key);
-        if (fragment != null && fragment instanceof BaseFragment){
-            ((BaseFragment)fragment).controller.onShowed();
-        }
     }
 //
 //    public int getCurrentItem(){

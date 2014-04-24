@@ -24,5 +24,7 @@ public abstract class BaseController<T extends BaseFragment> {
     /**
      * Will be called when fragment sets as current
      */
-    public void onShowed() {}
+    public void onShow() {}
+
+    public void onHide() {}
 }
