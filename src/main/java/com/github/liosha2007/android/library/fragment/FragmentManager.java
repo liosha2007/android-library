@@ -62,7 +62,11 @@ public class FragmentManager extends FragmentPagerAdapter {
     }
 
     public void removeFragment(int key) {
-        key2fragments.remove(key);
+        Fragment fragment = key2fragments.remove(key);
+        ApplicationActivity.activity.getSupportFragmentManager()
+                .beginTransaction()
+                .remove(ApplicationActivity.activity.getSupportFragmentManager().findFragmentById(fragment.getId()))
+                .commit();
     }
 
     public int indexOf(int key) {
