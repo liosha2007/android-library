@@ -15,12 +15,11 @@ import org.apache.log4j.Logger;
 public abstract class BaseFragment<T extends BaseController> extends Fragment {
     private static final Logger LOGGER = Logger.getLogger(BaseFragment.class);
     protected View view;
-    protected final T controller;
+    protected T controller;
     private int layoutId;
 
-    protected BaseFragment(int layoutId, T controller) {
+    protected BaseFragment(int layoutId) {
         this.layoutId = layoutId;
-        this.controller = controller;
     }
 
     @Override
@@ -37,7 +36,6 @@ public abstract class BaseFragment<T extends BaseController> extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        controller.initialize(view, savedInstanceState, this);
         controller.onViewCreated(savedInstanceState);
         onViewCreated(view);
     }
@@ -73,10 +71,19 @@ public abstract class BaseFragment<T extends BaseController> extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            controller.onShow();
+        if (controller == null) {
+            Utils.err("Error: Fragment created before controller!");
         } else {
-            controller.onHide();
+            if (isVisibleToUser) {
+                controller.onShow();
+            } else {
+                controller.onHide();
+            }
         }
+    }
+
+    public Fragment setController(T controller) {
+        this.controller = controller;
+        return this;
     }
 }

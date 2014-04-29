@@ -1,5 +1,6 @@
 package com.github.liosha2007.android.library.controller;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import com.github.liosha2007.android.library.fragment.BaseFragment;
@@ -10,8 +11,11 @@ import com.github.liosha2007.android.library.fragment.BaseFragment;
 public abstract class BaseController<T extends BaseFragment> {
     protected T fragment;
 
-    public void initialize(View view, Bundle savedInstanceState, T fragment) {
+    protected BaseController(T fragment){
         this.fragment = fragment;
+        if (this.fragment != null){
+            this.fragment.setController(this);
+        }
     }
 
     public abstract void onViewCreated(Bundle savedInstanceState);
@@ -27,4 +31,9 @@ public abstract class BaseController<T extends BaseFragment> {
     public void onShow() {}
 
     public void onHide() {}
+
+    public T getFragment() {
+        return fragment;
+    }
+
 }

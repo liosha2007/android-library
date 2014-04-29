@@ -6,8 +6,10 @@ import android.support.v4.view.ViewPager;
 import com.github.liosha2007.android.library.application.ApplicationActivity;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author Aleksey Permyakov
@@ -78,7 +80,8 @@ public class FragmentManager extends FragmentPagerAdapter {
      * @param key fragment key
      */
     public void setCurrentItem(int key) {
-        FragmentManager.viewPager.setCurrentItem(Arrays.asList(key2fragments.keySet().toArray(new Integer[key2fragments.size()])).indexOf(key));
+        List<Integer> keys = new ArrayList<Integer>(key2fragments.keySet());
+        FragmentManager.viewPager.setCurrentItem(keys.indexOf(key));
     }
 //
 //    public int getCurrentItem(){
