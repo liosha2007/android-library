@@ -80,6 +80,6 @@ public abstract class BaseController<T extends BaseView> extends Activity {
             intent.putExtras(bundle);
         }
         startActivity(intent);
-        Utils.deb("Activity " + clazz.getName() + " is started!");
+        Utils.deb("Activity " + clazz.getSimpleName() + " is started!");
     }
 }
