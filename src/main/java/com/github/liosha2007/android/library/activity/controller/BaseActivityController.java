@@ -1,19 +1,19 @@
-package com.github.liosha2007.android.library.controller;
+package com.github.liosha2007.android.library.activity.controller;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import com.github.liosha2007.android.library.common.Utils;
-import com.github.liosha2007.android.library.view.BaseView;
-import org.apache.log4j.Logger;
+import com.github.liosha2007.android.library.activity.view.BaseActivityView;
 
 /**
  * @author Aleksey Permyakov
  */
-public abstract class BaseController<T extends BaseView> extends Activity {
+public abstract class BaseActivityController<T extends BaseActivityView> extends FragmentActivity {
     protected T view;
 
-    protected BaseController(T view){
+    protected BaseActivityController(T view){
         this.view = view;
         if (this.view != null){
             this.view.setController(this);
@@ -65,7 +65,7 @@ public abstract class BaseController<T extends BaseView> extends Activity {
      * Will run Controller with null bundle object
      * @param clazz
      */
-    public <T extends BaseController> void run(Class<T> clazz){
+    public <T extends BaseActivityController> void run(Class<T> clazz){
         run(clazz, null);
     }
 
@@ -74,7 +74,7 @@ public abstract class BaseController<T extends BaseView> extends Activity {
      * @param clazz
      * @param bundle
      */
-    public <T extends BaseController> void run(Class<T> clazz, Bundle bundle){
+    public <T extends BaseActivityController> void run(Class<T> clazz, Bundle bundle){
         Intent intent = new Intent(this, clazz);
         if (bundle != null){
             intent.putExtras(bundle);

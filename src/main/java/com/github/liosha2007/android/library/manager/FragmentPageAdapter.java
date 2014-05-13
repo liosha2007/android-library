@@ -1,4 +1,4 @@
-package com.github.liosha2007.android.library.view;
+package com.github.liosha2007.android.library.manager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,11 +28,6 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 
     public void add(Fragment fragment){
         fragments.add(fragment);
-        notifyDataSetChanged();
-    }
-
-    public void remove(Fragment fragment){
-        fragments.remove(fragment);
         notifyDataSetChanged();
     }
 
