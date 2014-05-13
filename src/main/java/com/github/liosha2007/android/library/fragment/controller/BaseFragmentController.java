@@ -30,8 +30,8 @@ public abstract class BaseFragmentController<T extends BaseFragmentView> extends
     }
 
     @Override
-    public void onCreate(Bundle storage) {
-        super.onCreate(storage);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         view.onCreate();
         this.onCreate();
     }
@@ -80,5 +80,10 @@ public abstract class BaseFragmentController<T extends BaseFragmentView> extends
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         bundle.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+    }
+
+    public <T extends BaseFragmentController> T withArguments(Bundle args) {
+        super.setArguments(args);
+        return (T)this;
     }
 }

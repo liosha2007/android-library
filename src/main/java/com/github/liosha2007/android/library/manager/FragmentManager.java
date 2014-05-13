@@ -19,19 +19,16 @@ public class FragmentManager <T extends BaseFragmentView> {
     private ViewPager viewPager;
     private FragmentPageAdapter fragmentPageAdapter;
 
-    protected FragmentManager(ViewPager viewPager, android.support.v4.app.FragmentManager fragmentManager, Class<BaseFragmentController<T>>[] fragments){
+    protected FragmentManager(ViewPager viewPager, android.support.v4.app.FragmentManager fragmentManager, BaseFragmentController<T>[] fragments){
         this.viewPager = viewPager;
         this.fragmentPageAdapter = new FragmentPageAdapter(fragmentManager);
-        for (Class<BaseFragmentController<T>> clazz : fragments){
-            try {
-                this.fragmentPageAdapter.add(clazz.newInstance());
-            } catch (Exception e) {
-                Utils.err("Can't create fragment " + clazz.getName());
-            }
+        for (BaseFragmentController<T> fragment : fragments){
+            this.fragmentPageAdapter.add(fragment);
         }
+        this.viewPager.setAdapter(this.fragmentPageAdapter);
     }
 
-    public static <T extends BaseFragmentView> FragmentManager prepareViewPager(ViewPager viewPager, FragmentActivity fragmentActivity, Class<BaseFragmentController<T>>... fragments) {
+    public static <T extends BaseFragmentController> FragmentManager prepareViewPager(ViewPager viewPager, FragmentActivity fragmentActivity, T... fragments) {
         if (fragments.length == 0) {
             Utils.err("FragmentManager: fragments.length is 0");
             return null;
