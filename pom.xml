@@ -46,55 +46,96 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>${pom.artifactId}-v${pom.version}-b${build.number}</finalName>
+        <finalName>${pom.artifactId}-v${pom.version}</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.2</version>
-                <configuration>
-                    <buildNumberPropertiesFileLocation>project.properties</buildNumberPropertiesFileLocation>
-                    <buildNumberPropertyName>build.number</buildNumberPropertyName>
-                    <format>{0}</format>
-                    <!--<format>{0,date,HH.mm.ss}</format>-->
-                    <items>
-                        <item>buildNumber</item>
-                        <!--<item>timestamp</item>-->
-                    </items>
-                    <doCheck>true</doCheck>
-                    <doUpdate>true</doUpdate>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>2.5.1</version>
-                <executions>
-                    <execution>
-                        <id>install</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <file>${build.directory}/${build.finalName}.jar</file>
-                    <artifactId>${pom.artifactId}</artifactId>
-                    <groupId>${pom.groupId}</groupId>
-                    <version>${pom.version}</version>
-                    <packaging>${pom.packaging}</packaging>
-                </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.1</version>
+                    <executions>
+                        <execution>
+                            <id>install</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>install-file</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <file>${build.directory}/${build.finalName}.jar</file>
+                        <artifactId>${pom.artifactId}</artifactId>
+                        <groupId>${pom.groupId}</groupId>
+                        <version>${pom.version}</version>
+                        <packaging>${pom.packaging}</packaging>
+                    </configuration>
+                </plugin>
+                <!--<plugin>-->
+                <!--<groupId>com.github.wvengen</groupId>-->
+                <!--<artifactId>proguard-maven-plugin</artifactId>-->
+                <!--<executions>-->
+                <!--<execution>-->
+                <!--<id>proguard</id>-->
+                <!--<phase>package</phase>-->
+                <!--<goals>-->
+                <!--<goal>proguard</goal>-->
+                <!--</goals>-->
+                <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                <!--<options>-->
+                <!--<option>-keep class !com.groupdocs.annotation.** { *; }</option>-->
+                <!--<option>-keep public class com.groupdocs.annotation.config.** { *; }</option>-->
+                <!--<option>-keep public class com.groupdocs.annotation.domain.request.** {  *; }</option>-->
+                <!--<option>-keep public class com.groupdocs.annotation.domain.response.** {  *; }</option>-->
+                <!--<option>-keep public class com.groupdocs.annotation.domain.* {  *; }</option>-->
+                <!--<option>-keep public class com.groupdocs.annotation.handler.* {  *; }</option>-->
+                <!--<option>-keep public class com.groupdocs.annotation.service.* {  *; }</option>-->
+                <!--<option>-keep public class com.groupdocs.annotation.utils.* {  *; }</option>-->
+                <!--<option>-keep class a.** { *; }</option>-->
+                <!--<option>-keep class groupdocs.viewer.** { *; }</option>-->
+                <!--<option>-keep class aspose.** { *; }</option>-->
+                <!--<option>-keep class asposewobfuscated.** { *; }</option>-->
+                <!--<option>-keep class ch.** { *; }</option>-->
+                <!--<option>-keep class javax.** { *; }</option>-->
+                <!--<option>-keep class net.** { *; }</option>-->
+                <!--<option>-keep class org.** { *; }</option>-->
+                <!--<option>-keep class org.joda.time.** { *; }</option>-->
+                <!--<option>-keep class org.joda.convert.** { *; }</option>-->
+                <!--<option>-dontnote</option>-->
+                <!--<option>-ignorewarnings</option>-->
+                <!--<option>-dontoptimize</option>-->
+                <!--<option>-dontshrink</option>-->
+                <!--<option>-dontpreverify</option>-->
+                <!--<option>-keepattributes</option>-->
+                <!--</options>-->
+                <!--<libs>-->
+                <!--<lib>${java.bootstrap.classes}</lib>-->
+                <!--<lib>${java.cryptographic.extension.classes}</lib>-->
+                <!--<lib>${java.secure.socket.extension.classes}</lib>-->
+                <!--</libs>-->
+                <!--<obfuscate>true</obfuscate>-->
+                <!--<injar>${project.build.finalName}.jar</injar>-->
+                <!--<outjar>${project.build.finalName}-fat-final-${build.number}.jar</outjar>-->
+                <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
+                <!--</configuration>-->
+                <!--<dependencies>-->
+                <!--<dependency>-->
+                <!--<groupId>net.sf.proguard</groupId>-->
+                <!--<artifactId>proguard-base</artifactId>-->
+                <!--<version>4.10</version>-->
+                <!--<scope>runtime</scope>-->
+                <!--</dependency>-->
+                <!--</dependencies>-->
+                <!--</plugin>-->
+            </plugins>
+        </pluginManagement>
     </build>
     <profiles>
         <profile>
@@ -103,7 +144,9 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
-                <plugins></plugins>
+                <plugins>
+
+                </plugins>
             </build>
         </profile>
         <profile>
@@ -116,64 +159,7 @@
             </activation>
             <build>
                 <plugins>
-                    <!--<plugin>-->
-                    <!--<groupId>com.github.wvengen</groupId>-->
-                    <!--<artifactId>proguard-maven-plugin</artifactId>-->
-                    <!--<executions>-->
-                    <!--<execution>-->
-                    <!--<id>proguard</id>-->
-                    <!--<phase>package</phase>-->
-                    <!--<goals>-->
-                    <!--<goal>proguard</goal>-->
-                    <!--</goals>-->
-                    <!--</execution>-->
-                    <!--</executions>-->
-                    <!--<configuration>-->
-                    <!--<options>-->
-                    <!--<option>-keep class !com.groupdocs.annotation.** { *; }</option>-->
-                    <!--<option>-keep public class com.groupdocs.annotation.config.** { *; }</option>-->
-                    <!--<option>-keep public class com.groupdocs.annotation.domain.request.** {  *; }</option>-->
-                    <!--<option>-keep public class com.groupdocs.annotation.domain.response.** {  *; }</option>-->
-                    <!--<option>-keep public class com.groupdocs.annotation.domain.* {  *; }</option>-->
-                    <!--<option>-keep public class com.groupdocs.annotation.handler.* {  *; }</option>-->
-                    <!--<option>-keep public class com.groupdocs.annotation.service.* {  *; }</option>-->
-                    <!--<option>-keep public class com.groupdocs.annotation.utils.* {  *; }</option>-->
-                    <!--<option>-keep class a.** { *; }</option>-->
-                    <!--<option>-keep class groupdocs.viewer.** { *; }</option>-->
-                    <!--<option>-keep class aspose.** { *; }</option>-->
-                    <!--<option>-keep class asposewobfuscated.** { *; }</option>-->
-                    <!--<option>-keep class ch.** { *; }</option>-->
-                    <!--<option>-keep class javax.** { *; }</option>-->
-                    <!--<option>-keep class net.** { *; }</option>-->
-                    <!--<option>-keep class org.** { *; }</option>-->
-                    <!--<option>-keep class org.joda.time.** { *; }</option>-->
-                    <!--<option>-keep class org.joda.convert.** { *; }</option>-->
-                    <!--<option>-dontnote</option>-->
-                    <!--<option>-ignorewarnings</option>-->
-                    <!--<option>-dontoptimize</option>-->
-                    <!--<option>-dontshrink</option>-->
-                    <!--<option>-dontpreverify</option>-->
-                    <!--<option>-keepattributes</option>-->
-                    <!--</options>-->
-                    <!--<libs>-->
-                    <!--<lib>${java.bootstrap.classes}</lib>-->
-                    <!--<lib>${java.cryptographic.extension.classes}</lib>-->
-                    <!--<lib>${java.secure.socket.extension.classes}</lib>-->
-                    <!--</libs>-->
-                    <!--<obfuscate>true</obfuscate>-->
-                    <!--<injar>${project.build.finalName}.jar</injar>-->
-                    <!--<outjar>${project.build.finalName}-fat-final-${build.number}.jar</outjar>-->
-                    <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
-                    <!--</configuration>-->
-                    <!--<dependencies>-->
-                    <!--<dependency>-->
-                    <!--<groupId>net.sf.proguard</groupId>-->
-                    <!--<artifactId>proguard-base</artifactId>-->
-                    <!--<version>4.10</version>-->
-                    <!--<scope>runtime</scope>-->
-                    <!--</dependency>-->
-                    <!--</dependencies>-->
-                    <!--</plugin>-->
+
                 </plugins>
             </build>
         </profile>

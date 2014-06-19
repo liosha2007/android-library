@@ -13,7 +13,7 @@ import com.github.liosha2007.android.library.activity.view.BaseActivityView;
 public abstract class BaseActivityController<T extends BaseActivityView> extends FragmentActivity {
     protected T view;
 
-    protected BaseActivityController(T view){
+    public BaseActivityController(T view){
         this.view = view;
         if (this.view != null){
             this.view.setController(this);

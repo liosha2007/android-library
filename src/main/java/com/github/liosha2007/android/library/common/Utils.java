@@ -50,14 +50,10 @@ public class Utils {
     public static void closeStreams(Object ...streams){
         for (Object obj : streams) {
             try {
-                if (obj == null){
-                    continue;
-                } else if (obj instanceof InputStream) {
+                if (obj instanceof InputStream) {
                     ((InputStream) obj).close();
                 } else if (obj instanceof OutputStream) {
                     ((OutputStream) obj).close();
-                } else {
-                    // Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, "Object '" + obj + "' can't be closed!");
                 }
             } catch (Exception e){
                 // Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, e);
@@ -66,22 +62,11 @@ public class Utils {
     }
 
     /**
-     * @param str
-     * @return
-     */
-    public static boolean isNull(String str) {
-        return str == null ? true : false;
-    }
-
-    /**
      * @param param
      * @return
      */
     public static boolean isNullOrBlank(String param) {
-        if (isNull(param) || param.trim().length() == 0) {
-            return true;
-        }
-        return false;
+        return param == null || param.trim().length() == 0;
     }
 
     public static void err(String error_message) {
