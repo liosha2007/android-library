@@ -1,10 +1,7 @@
 package com.github.liosha2007.android.library.manager;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import com.github.liosha2007.android.library.activity.controller.BaseActivityController;
 import com.github.liosha2007.android.library.common.Utils;
 import com.github.liosha2007.android.library.fragment.controller.BaseFragmentController;
 import com.github.liosha2007.android.library.fragment.view.BaseFragmentView;

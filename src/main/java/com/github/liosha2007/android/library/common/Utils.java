@@ -1,6 +1,8 @@
 package com.github.liosha2007.android.library.common;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -90,5 +92,11 @@ public class Utils {
             Utils.closeStreams(inputStream);
         }
         return null;
+    }
+
+    public static void copyText(Context context, String label, String textToCopy) {
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(label, textToCopy);
+        clipboard.setPrimaryClip(clip);
     }
 }

@@ -2,8 +2,8 @@ package com.github.liosha2007.android.library.activity.view;
 
 import android.os.Bundle;
 import android.view.View;
-import com.github.liosha2007.android.library.common.Utils;
 import com.github.liosha2007.android.library.activity.controller.BaseActivityController;
+import com.github.liosha2007.android.library.common.Utils;
 import org.apache.log4j.Logger;
 
 /**

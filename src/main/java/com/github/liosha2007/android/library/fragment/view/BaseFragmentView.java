@@ -1,12 +1,10 @@
 package com.github.liosha2007.android.library.fragment.view;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.liosha2007.android.library.common.Utils;
-import com.github.liosha2007.android.library.activity.controller.BaseActivityController;
 import com.github.liosha2007.android.library.fragment.controller.BaseFragmentController;
 import org.apache.log4j.Logger;
 
