@@ -1,16 +1,15 @@
 package com.github.liosha2007.android.library.activity.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import com.github.liosha2007.android.library.activity.controller.BaseActivityController;
 import com.github.liosha2007.android.library.common.Utils;
-import org.apache.log4j.Logger;
 
 /**
  * @author Aleksey Permyakov
  */
 public abstract class BaseActivityView<T extends BaseActivityController> {
-    private static final Logger LOGGER = Logger.getLogger(BaseActivityView.class);
     protected View view;
     protected T controller;
     private int layoutId;
@@ -33,7 +32,7 @@ public abstract class BaseActivityView<T extends BaseActivityController> {
      */
     public <T extends View> T view(int id) {
         if (view == null) {
-            LOGGER.error("view is null");
+            Log.e(Utils.TAG, "view is null");
             return null;
         }
         return (T) Utils.view(view, id);

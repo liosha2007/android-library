@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import com.google.gson.Gson;
-import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,9 +16,8 @@ import java.io.OutputStream;
  * @author Aleksey Permyakov
  */
 public class Utils {
-    private static final String TAG = "android-library";
+    public static final String TAG = "android-library";
     private static int _uniqueId = 0;
-    private static final Logger LOGGER = Logger.getLogger(Utils.class);
     public static final Gson gson;
     static {
         gson = new Gson();
@@ -31,7 +29,7 @@ public class Utils {
 
     public static <T extends View> T view(View view, int id) {
         if (view == null) {
-            LOGGER.error("view is null");
+            Log.e(TAG, "view is null");
             return null;
         }
         return (T) view.findViewById(id);
@@ -39,7 +37,7 @@ public class Utils {
 
     public static <T extends View> T view(Activity activity, int id) {
         if (activity == null) {
-            LOGGER.error("activity is null");
+            Log.e(TAG, "activity is null");
             return null;
         }
         return (T) activity.findViewById(id);

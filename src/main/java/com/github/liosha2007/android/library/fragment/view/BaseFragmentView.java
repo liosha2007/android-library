@@ -1,18 +1,17 @@
 package com.github.liosha2007.android.library.fragment.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.liosha2007.android.library.common.Utils;
 import com.github.liosha2007.android.library.fragment.controller.BaseFragmentController;
-import org.apache.log4j.Logger;
 
 /**
- * Created by liosha on 13.05.14.
+ * @author liosha on 13.05.14.
  */
 public class BaseFragmentView<T extends BaseFragmentController> {
-    private static final Logger LOGGER = Logger.getLogger(BaseFragmentView.class);
     protected View view;
     protected T controller;
     private int layoutId;
@@ -38,7 +37,7 @@ public class BaseFragmentView<T extends BaseFragmentController> {
      */
     public <T extends View> T view(int id) {
         if (view == null) {
-            LOGGER.error("view is null");
+            Log.e(Utils.TAG, "view is null");
             return null;
         }
         return (T) Utils.view(view, id);
