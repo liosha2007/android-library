@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -96,5 +99,22 @@ public class Utils {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(label, textToCopy);
         clipboard.setPrimaryClip(clip);
+    }
+
+    public static Bitmap stream2bitmap(InputStream inputStream){
+        try {
+            return BitmapFactory.decodeStream(inputStream);
+        } finally {
+            Utils.closeStreams(inputStream);
+        }
+    }
+
+    public static Bitmap bytes2bitmap(byte[] bytes){
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        try {
+            return BitmapFactory.decodeStream(byteArrayInputStream);
+        } finally {
+            Utils.closeStreams(byteArrayInputStream);
+        }
     }
 }
