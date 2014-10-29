@@ -14,6 +14,8 @@ import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Aleksey Permyakov
@@ -22,6 +24,7 @@ public class Utils {
     public static final String TAG = "android-library";
     private static int _uniqueId = 0;
     public static final Gson gson;
+
     static {
         gson = new Gson();
     }
@@ -50,7 +53,7 @@ public class Utils {
         return _uniqueId++;
     }
 
-    public static void closeStreams(Object ...streams){
+    public static void closeStreams(Object... streams) {
         for (Object obj : streams) {
             try {
                 if (obj instanceof InputStream) {
@@ -58,7 +61,7 @@ public class Utils {
                 } else if (obj instanceof OutputStream) {
                     ((OutputStream) obj).close();
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 // Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, e);
             }
         }
@@ -76,11 +79,15 @@ public class Utils {
         Log.e(TAG, isNullOrBlank(error_message) ? "Unknown error!" : error_message);
     }
 
+    public static void war(String error_message) {
+        Log.w(TAG, isNullOrBlank(error_message) ? "Unknown warning!" : error_message);
+    }
+
     public static void deb(String error_message) {
         Log.d(TAG, error_message);
     }
 
-    public static Drawable loadImageFromAssets(Context context, String assetsPath){
+    public static Drawable loadImageFromAssets(Context context, String assetsPath) {
         InputStream inputStream = null;
         try {
             // get input stream
@@ -101,7 +108,7 @@ public class Utils {
         clipboard.setPrimaryClip(clip);
     }
 
-    public static Bitmap stream2bitmap(InputStream inputStream){
+    public static Bitmap stream2bitmap(InputStream inputStream) {
         try {
             return BitmapFactory.decodeStream(inputStream);
         } finally {
@@ -109,12 +116,83 @@ public class Utils {
         }
     }
 
-    public static Bitmap bytes2bitmap(byte[] bytes){
+    public static Bitmap bytes2bitmap(byte[] bytes) {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         try {
             return BitmapFactory.decodeStream(byteArrayInputStream);
         } finally {
             Utils.closeStreams(byteArrayInputStream);
         }
+    }
+
+    /**
+     * Return list with values which will be provided by select object for each element from values
+     *
+     * @param values list to check
+     * @param select object to return value
+     * @param <T>    source type
+     * @param <R>    result type
+     * @return list with values
+     */
+    public static <T, R> List<R> select(List<T> values, ISelect<T, R> select) {
+        List<R> result = new ArrayList<R>(values.size());
+        for (T value : values) {
+            result.add(select.toAdd(value));
+        }
+        return result;
+    }
+
+    /**
+     * Interface for check values
+     *
+     * @param <T> values type
+     */
+    public interface ISelect<T, R> {
+        R toAdd(T source);
+    }
+
+
+    /**
+     * Discard few letters from end of string
+     *
+     * @param inputString  input string
+     * @param discardCount count of letters to discard
+     * @return result string
+     */
+    public static String discard(String inputString, int discardCount) {
+        return discard(inputString, discardCount, false);
+    }
+
+    /**
+     * Discard few letters from string
+     *
+     * @param inputString  input string
+     * @param discardCount count of letters to discard
+     * @param fromStart    discard from start of string if true
+     * @return result string
+     */
+    public static String discard(String inputString, int discardCount, boolean fromStart) {
+        return discard(inputString, discardCount, fromStart, null);
+    }
+
+    /**
+     * Discard letters according to regex from end of string
+     *
+     * @param inputString input string
+     * @param matchRegEx  regex for fing letters to discard
+     * @return result string
+     */
+    public static String discard(String inputString, String matchRegEx) {
+        return discard(inputString, 0, false, matchRegEx);
+    }
+
+    private static String discard(String inputString, int discardCount, boolean fromStart, String matchRegEx) {
+        if (inputString == null || discardCount > inputString.length()) {
+            return inputString;
+        }
+        if (matchRegEx == null || matchRegEx.isEmpty()) {
+            return fromStart ? inputString.substring(discardCount) : inputString.substring(0, inputString.length() - discardCount);
+        }
+        return inputString.replaceFirst(matchRegEx, "");
     }
 }
