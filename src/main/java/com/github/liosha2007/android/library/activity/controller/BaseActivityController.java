@@ -61,6 +61,24 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
     }
 
     /**
+     *
+     * @param newActivityAnimation new activity animation resource
+     */
+    public void onBackPressed(int newActivityAnimation) {
+        onBackPressed(newActivityAnimation, 0);
+    }
+
+    /**
+     *
+     * @param newActivityAnimation new activity animation resource
+     * @param oldActivityAnimation old activity animation resource
+     */
+    public void onBackPressed(int newActivityAnimation, int oldActivityAnimation) {
+        super.onBackPressed();
+        overridePendingTransition(newActivityAnimation, oldActivityAnimation);
+    }
+
+    /**
      * Will run Controller with null bundle object
      * @param clazz
      */
@@ -69,16 +87,59 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
     }
 
     /**
+     * Will run Controller with null bundle object
+     * @param clazz
+     * @param newActivityAnimation new activity animation resource
+     */
+    public <T extends BaseActivityController> void run(Class<T> clazz, int newActivityAnimation){
+        run(clazz, null, newActivityAnimation);
+    }
+
+    /**
+     * Will run Controller with null bundle object
+     * @param clazz
+     * @param newActivityAnimation new activity animation resource
+     * @param oldActivityAnimation old activity animation resource
+     */
+    public <T extends BaseActivityController> void run(Class<T> clazz, int newActivityAnimation, int oldActivityAnimation){
+        run(clazz, null, newActivityAnimation, oldActivityAnimation);
+    }
+
+    /**
      * Will run Controller with bundle object
      * @param clazz
      * @param bundle
      */
     public <T extends BaseActivityController> void run(Class<T> clazz, Bundle bundle){
+        run(clazz, bundle, 0);
+    }
+
+    /**
+     * Will run Controller with bundle object
+     * Intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); to disable standard animation
+     * @param clazz
+     * @param bundle
+     * @param newActivityAnimation new activity animation resource
+     */
+    private <T extends BaseActivityController> void run(Class<T> clazz, Bundle bundle, int newActivityAnimation) {
+        run(clazz, bundle, newActivityAnimation, 0);
+    }
+
+    /**
+     * Will run Controller with null bundle object
+     * @param clazz
+     * @param bundle
+     * @param newActivityAnimation new activity animation resource
+     * @param oldActivityAnimation old activity animation resource
+     */
+    private <T extends BaseActivityController> void run(Class<T> clazz, Bundle bundle, int newActivityAnimation, int oldActivityAnimation) {
         Intent intent = new Intent(this, clazz);
         if (bundle != null){
             intent.putExtras(bundle);
         }
         startActivity(intent);
+        overridePendingTransition(newActivityAnimation, oldActivityAnimation);
         Utils.deb("Activity " + clazz.getSimpleName() + " is started!");
     }
+
 }
