@@ -6,14 +6,15 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.12'
 }
 // http://www.gradle.org/docs/current/userguide/java_plugin.html
+apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'maven'
 
 group = 'com.github.liosha2007'
 version = '1.2.1'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = '1.6'
+targetCompatibility = '1.6'
 project.buildDir = 'target'
 
 compileJava.options.encoding = 'UTF-8'
@@ -23,9 +24,13 @@ repositories {
 }
 
 dependencies {
-	compile 'com.google.code.gson:gson:2.2.4'
-	compile 'com.google.android:support-v4:r6'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.android:support-v4:r7'
     compile 'com.google.android:android:4.1.1.4'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'commons-io:commons-io:+'
+    compile gradleApi()
+    compile localGroovy()
 }
 
 sourceSets {

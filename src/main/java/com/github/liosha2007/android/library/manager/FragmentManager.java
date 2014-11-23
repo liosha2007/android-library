@@ -11,15 +11,15 @@ import java.util.HashMap;
 /**
  * @author Aleksey Permyakov
  */
-public class FragmentManager <T extends BaseFragmentView> {
+public class FragmentManager<T extends BaseFragmentView> {
     protected static final HashMap<ViewPager, FragmentManager> fragmentPager2FragmentManager = new HashMap<ViewPager, FragmentManager>();
     private ViewPager viewPager;
     private FragmentPageAdapter fragmentPageAdapter;
 
-    protected FragmentManager(ViewPager viewPager, android.support.v4.app.FragmentManager fragmentManager, BaseFragmentController<T>[] fragments){
+    protected FragmentManager(ViewPager viewPager, android.support.v4.app.FragmentManager fragmentManager, BaseFragmentController<T>[] fragments) {
         this.viewPager = viewPager;
         this.fragmentPageAdapter = new FragmentPageAdapter(fragmentManager);
-        for (BaseFragmentController<T> fragment : fragments){
+        for (BaseFragmentController<T> fragment : fragments) {
             this.fragmentPageAdapter.add(fragment);
         }
         this.viewPager.setAdapter(this.fragmentPageAdapter);
@@ -30,14 +30,14 @@ public class FragmentManager <T extends BaseFragmentView> {
             Utils.err("FragmentManager: fragments.length is 0");
             return null;
         }
-        if (fragmentPager2FragmentManager.keySet().contains(viewPager)){
+        if (fragmentPager2FragmentManager.keySet().contains(viewPager)) {
             Utils.err("FragmentManager: ViewPager with id " + viewPager.getId() + " is already prepared!");
             return null;
         }
         return fragmentPager2FragmentManager.put(viewPager, new FragmentManager(viewPager, fragmentActivity.getSupportFragmentManager(), fragments));
     }
 
-    public static <T extends BaseFragmentView> FragmentManager get(ViewPager viewPager){
+    public static <T extends BaseFragmentView> FragmentManager get(ViewPager viewPager) {
         return fragmentPager2FragmentManager.get(viewPager);
     }
 

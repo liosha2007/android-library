@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import com.github.liosha2007.android.library.activity.view.BaseActivityView;
 import com.github.liosha2007.android.library.common.Utils;
+import com.github.liosha2007.android.library.database.DaoFactory;
+import com.j256.ormlite.dao.BaseDaoImpl;
 
 /**
  * @author Aleksey Permyakov
@@ -12,9 +14,9 @@ import com.github.liosha2007.android.library.common.Utils;
 public abstract class BaseActivityController<T extends BaseActivityView> extends FragmentActivity {
     protected T view;
 
-    public BaseActivityController(T view){
+    public BaseActivityController(T view) {
         this.view = view;
-        if (this.view != null){
+        if (this.view != null) {
             this.view.setController(this);
         }
     }
@@ -45,15 +47,23 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
 
     /**
      * Will be called when application should save data
+     *
      * @param storage to save application data
      */
-    protected void onSaveData(Bundle storage) { }
+    protected void onSaveData(Bundle storage) {
+    }
 
     /**
      * Will be called when application should restore data
+     *
      * @param storage to restore data
      */
-    public void onRestoreData(Bundle storage) { }
+    public void onRestoreData(Bundle storage) {
+    }
+
+    public <T extends BaseDaoImpl> T daoFor(Class clazz) {
+        return DaoFactory.daoFor(this, clazz);
+    }
 
     @Override
     public void onBackPressed() {
@@ -61,7 +71,6 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
     }
 
     /**
-     *
      * @param newActivityAnimation new activity animation resource
      */
     public void onBackPressed(int newActivityAnimation) {
@@ -69,7 +78,6 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
     }
 
     /**
-     *
      * @param newActivityAnimation new activity animation resource
      * @param oldActivityAnimation old activity animation resource
      */
@@ -80,43 +88,48 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
 
     /**
      * Will run Controller with null bundle object
+     *
      * @param clazz
      */
-    public <T extends BaseActivityController> void run(Class<T> clazz){
+    public <T extends BaseActivityController> void run(Class<T> clazz) {
         run(clazz, null);
     }
 
     /**
      * Will run Controller with null bundle object
+     *
      * @param clazz
      * @param newActivityAnimation new activity animation resource
      */
-    public <T extends BaseActivityController> void run(Class<T> clazz, int newActivityAnimation){
+    public <T extends BaseActivityController> void run(Class<T> clazz, int newActivityAnimation) {
         run(clazz, null, newActivityAnimation);
     }
 
     /**
      * Will run Controller with null bundle object
+     *
      * @param clazz
      * @param newActivityAnimation new activity animation resource
      * @param oldActivityAnimation old activity animation resource
      */
-    public <T extends BaseActivityController> void run(Class<T> clazz, int newActivityAnimation, int oldActivityAnimation){
+    public <T extends BaseActivityController> void run(Class<T> clazz, int newActivityAnimation, int oldActivityAnimation) {
         run(clazz, null, newActivityAnimation, oldActivityAnimation);
     }
 
     /**
      * Will run Controller with bundle object
+     *
      * @param clazz
      * @param bundle
      */
-    public <T extends BaseActivityController> void run(Class<T> clazz, Bundle bundle){
+    public <T extends BaseActivityController> void run(Class<T> clazz, Bundle bundle) {
         run(clazz, bundle, 0);
     }
 
     /**
      * Will run Controller with bundle object
      * Intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); to disable standard animation
+     *
      * @param clazz
      * @param bundle
      * @param newActivityAnimation new activity animation resource
@@ -127,6 +140,7 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
 
     /**
      * Will run Controller with null bundle object
+     *
      * @param clazz
      * @param bundle
      * @param newActivityAnimation new activity animation resource
@@ -134,7 +148,7 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
      */
     private <T extends BaseActivityController> void run(Class<T> clazz, Bundle bundle, int newActivityAnimation, int oldActivityAnimation) {
         Intent intent = new Intent(this, clazz);
-        if (bundle != null){
+        if (bundle != null) {
             intent.putExtras(bundle);
         }
         startActivity(intent);

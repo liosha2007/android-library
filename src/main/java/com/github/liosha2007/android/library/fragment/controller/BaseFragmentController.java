@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.liosha2007.android.library.common.Utils;
+import com.github.liosha2007.android.library.database.DaoFactory;
 import com.github.liosha2007.android.library.fragment.view.BaseFragmentView;
+import com.j256.ormlite.dao.BaseDaoImpl;
 
 /**
  * @author Aleksey Permyakov
@@ -16,9 +18,9 @@ import com.github.liosha2007.android.library.fragment.view.BaseFragmentView;
 public abstract class BaseFragmentController<T extends BaseFragmentView> extends Fragment {
     protected T view;
 
-    protected BaseFragmentController(T view){
+    protected BaseFragmentController(T view) {
         this.view = view;
-        if (this.view != null){
+        if (this.view != null) {
             this.view.setController(this);
         }
     }
@@ -48,26 +50,35 @@ public abstract class BaseFragmentController<T extends BaseFragmentView> extends
         }
     }
 
-    public void onShow() { }
 
-    public void onHide() { }
+    public <T extends BaseDaoImpl> T daoFor(Class clazz) {
+        return DaoFactory.daoFor(getActivity(), clazz);
+    }
+
+    public void onShow() {
+    }
+
+    public void onHide() {
+    }
 
     /**
      * Will run Controller with null bundle object
+     *
      * @param clazz
      */
-    public <T extends Activity> void run(Class<T> clazz){
+    public <T extends Activity> void run(Class<T> clazz) {
         run(clazz, null);
     }
 
     /**
      * Will run Controller with bundle object
+     *
      * @param clazz
      * @param bundle
      */
-    public <T extends Activity> void run(Class<T> clazz, Bundle bundle){
+    public <T extends Activity> void run(Class<T> clazz, Bundle bundle) {
         Intent intent = new Intent(this.getActivity(), clazz);
-        if (bundle != null){
+        if (bundle != null) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
@@ -81,6 +92,6 @@ public abstract class BaseFragmentController<T extends BaseFragmentView> extends
 
     public <T extends BaseFragmentController> T withArguments(Bundle args) {
         super.setArguments(args);
-        return (T)this;
+        return (T) this;
     }
 }

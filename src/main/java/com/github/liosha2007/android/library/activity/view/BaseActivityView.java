@@ -40,6 +40,7 @@ public abstract class BaseActivityView<T extends BaseActivityController> {
 
     /**
      * Will be called when application should save data
+     *
      * @param storage to save application data
      */
     public void onSaveData(Bundle storage) {
@@ -48,9 +49,11 @@ public abstract class BaseActivityView<T extends BaseActivityController> {
 
     /**
      * Will be called when application should restore data
+     *
      * @param storage to restore data
      */
-    public void onRestoreData(Bundle storage) { }
+    public void onRestoreData(Bundle storage) {
+    }
 
     public void setController(T controller) {
         this.controller = controller;

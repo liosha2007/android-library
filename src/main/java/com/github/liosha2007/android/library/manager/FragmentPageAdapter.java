@@ -26,7 +26,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
         return fragments.size();
     }
 
-    public void add(Fragment fragment){
+    public void add(Fragment fragment) {
         fragments.add(fragment);
         notifyDataSetChanged();
     }
