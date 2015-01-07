@@ -3,6 +3,8 @@ package com.github.liosha2007.android.library.activity.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.View;
 import com.github.liosha2007.android.library.activity.view.BaseActivityView;
 import com.github.liosha2007.android.library.common.Utils;
 import com.github.liosha2007.android.library.database.DaoFactory;
@@ -155,5 +157,4 @@ public abstract class BaseActivityController<T extends BaseActivityView> extends
         overridePendingTransition(newActivityAnimation, oldActivityAnimation);
         Utils.deb("Activity " + clazz.getSimpleName() + " is started!");
     }
-
 }

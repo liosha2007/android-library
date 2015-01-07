@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import com.google.gson.Gson;
@@ -194,5 +199,64 @@ public class Utils {
             return fromStart ? inputString.substring(discardCount) : inputString.substring(0, inputString.length() - discardCount);
         }
         return inputString.replaceFirst(matchRegEx, "");
+    }
+
+    public static boolean haveInternet(Context context) {
+        NetworkInfo info = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if (info == null || !info.isConnected()) {
+            return false;
+        }
+        if (info.isRoaming()) {
+            // here is the roaming option you can change it if you want to disable internet while roaming, just return false
+            return true;
+        }
+        return true;
+    }
+    
+    public static String makeDisplayInfo(Context context){
+        int density = context.getResources().getDisplayMetrics().densityDpi;
+        int screenSize = context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+        StringBuilder stringBuilder = new StringBuilder();
+        switch (density) {
+            case DisplayMetrics.DENSITY_LOW:
+                stringBuilder.append("ldpi-");
+                break;
+            case DisplayMetrics.DENSITY_MEDIUM:
+                stringBuilder.append("mdpi-");
+                break;
+            case DisplayMetrics.DENSITY_HIGH:
+                stringBuilder.append("hdpi-");
+                break;
+            case DisplayMetrics.DENSITY_XHIGH:
+                stringBuilder.append("xhdpi-");
+                break;
+            case DisplayMetrics.DENSITY_XXHIGH:
+                stringBuilder.append("xxhdpi-");
+                break;
+        }
+
+        switch (screenSize) {
+            case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                stringBuilder.append("large");
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                stringBuilder.append("normal");
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                stringBuilder.append("small");
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+                stringBuilder.append("xlarge");
+                break;
+            default:
+                stringBuilder.append("unknown");
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String makeAndroidVersion() {
+        String release = Build.VERSION.RELEASE;
+        int sdkVersion = Build.VERSION.SDK_INT;
+        return "Android SDK: " + sdkVersion + " (" + release +")";
     }
 }

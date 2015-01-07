@@ -39,6 +39,16 @@ public abstract class BaseActivityView<T extends BaseActivityController> {
     }
 
     /**
+     * Inflate layout
+     * @param id
+     * @param <T>
+     * @return
+     */
+    public <T extends View> T inflate(int id) {
+        return (T) controller.getLayoutInflater().inflate(id, null);
+    }
+
+    /**
      * Will be called when application should save data
      *
      * @param storage to save application data

@@ -46,4 +46,16 @@ public class BaseFragmentView<T extends BaseFragmentController> {
     public void setController(T controller) {
         this.controller = controller;
     }
+
+
+    /**
+     * Inflate layout
+     * @param id
+     * @param <T>
+     * @return
+     */
+    public <T extends View> T inflate(int id) {
+        return (T) controller.getLayoutInflater(controller.getArguments()).inflate(id, null);
+    }
+
 }
