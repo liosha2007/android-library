@@ -10,17 +10,26 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+
 import com.google.gson.Gson;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -262,11 +271,42 @@ public class Utils {
         return "Android SDK: " + sdkVersion + " (" + release +")";
     }
 
-    public static String pngAsBase64Link(byte[] pngImage){
-        Bitmap bm = BitmapFactory.decodeByteArray(pngImage, 0, pngImage.length);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] b = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(b, Base64.DEFAULT);
+
+    public static interface ICallback{
+        public void onUploaded(String imageUrl);
+    }
+
+    public static void uploadImage(final byte[] imageBytes, final String imageName, final String apiKey, final String apiSecret, final ICallback callback){
+        new AsyncTask<byte[], Void, String>(){
+            @Override
+            protected String doInBackground(byte[]... params) {
+                try {
+                    FTPClient ftpClient = new FTPClient();
+                    ftpClient.connect(InetAddress.getByName("wen.ru"));
+                    ftpClient.login(apiKey, apiSecret);
+                    ftpClient.changeWorkingDirectory("images");
+                    ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+                    ftpClient.enterLocalPassiveMode();
+                    FTPFile[] ftpFiles = ftpClient.listFiles();
+                    for (FTPFile ftpFile : ftpFiles) {
+                        if (imageName.equals(ftpFile.getName())) {
+                            return "http://sw-manual.wen.ru/images/" + imageName;
+                        }
+                    }
+                    ftpClient.storeFile(imageName, new ByteArrayInputStream(params[0]));
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                    return "http://sw-manual.wen.ru/images/" + imageName;
+                } catch (Exception e){
+                    Utils.err("Facebook image upload error: " + e.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String url) {
+                callback.onUploaded(url);
+            }
+        }.execute(imageBytes);
     }
 }
