@@ -12,23 +12,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-
 import com.google.gson.Gson;
-
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -308,5 +300,10 @@ public class Utils {
                 callback.onUploaded(url);
             }
         }.execute(imageBytes);
+    }
+
+    public static File makeTempFilePath(Context context) throws IOException {
+        File outputDir = context.getCacheDir(); // context being the Activity pointer
+        return File.createTempFile("temp_", ".tmp", outputDir);
     }
 }
