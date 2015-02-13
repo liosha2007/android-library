@@ -1,1 +1,2 @@
-include ':app', ':libs:sliding-menu'
+include ':android-library', ':libs:sliding-menu'
+rootProject.name = 'android-library'
