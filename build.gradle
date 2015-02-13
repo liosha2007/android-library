@@ -1,48 +1,20 @@
-println GradleVersion.current()
-assert gradle.gradleVersion == '1.12'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-// Потому что более новая версия не поддерживается в android плагине
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
-}
-// http://www.gradle.org/docs/current/userguide/java_plugin.html
-apply plugin: 'idea'
-apply plugin: 'java'
-apply plugin: 'maven'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:0.10.770'
 
-group = 'com.github.liosha2007'
-version = '1.2.1'
-
-sourceCompatibility = '1.6'
-targetCompatibility = '1.6'
-project.buildDir = 'target'
-
-compileJava.options.encoding = 'UTF-8'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.google.android:support-v4:r7'
-    compile 'com.google.android:android:4.1.1.4'
-    compile 'com.j256.ormlite:ormlite-android:4.48'
-    compile 'commons-net:commons-net:3.3'
-    compile 'org.scribe:scribe:1.3.6'
-    compile gradleApi()
-    compile localGroovy()
-}
-
-sourceSets {
-    libsDirName = project.buildDir
-    main {
-        java {
-            srcDir 'src/java'
-        }
-        resources {
-            srcDir 'src/resources'
-        }
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
