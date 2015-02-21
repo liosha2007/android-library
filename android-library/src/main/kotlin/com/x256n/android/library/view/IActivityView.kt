@@ -6,9 +6,6 @@ import android.os.Bundle
 /**
  * @author liosha (13.02.2015)
  */
-public trait IActivityView<T: IActivityController> {
+public trait IActivityView {
 
-    public fun setController(controller: T): IActivityView<T>
-
-    public fun onCreate()
 }
