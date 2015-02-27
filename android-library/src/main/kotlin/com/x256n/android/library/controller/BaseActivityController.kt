@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.content.Intent
 import com.x256n.android.library.common.Utils
 import com.x256n.android.library.view.ActivityView
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity
 
 /**
  * @author liosha (13.02.2015)
  */
-public abstract class BaseActivityController<V, C> : FragmentActivity() {
+public abstract class BaseActivityController<V, C> : SlidingFragmentActivity() {
     protected abstract val view: V
 
     public override fun onSaveInstanceState(storage: Bundle) {
