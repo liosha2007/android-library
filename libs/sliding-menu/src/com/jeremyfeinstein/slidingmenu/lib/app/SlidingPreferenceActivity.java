@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-public class SlidingPreferenceActivity extends PreferenceActivity implements SlidingActivityBase {
+public class SlidingPreferenceActivity extends PreferenceActivity implements SlidingActivityBase, ILayoutProvider {
 
 	private SlidingActivityHelper mHelper;
 
@@ -30,6 +30,23 @@ public class SlidingPreferenceActivity extends PreferenceActivity implements Sli
 		super.onPostCreate(savedInstanceState);
 		mHelper.onPostCreate(savedInstanceState);
 	}
+
+    /**
+     * Override for customize layout
+     * @return layout id
+     */
+    public int getRootLayout() {
+        return com.jeremyfeinstein.slidingmenu.lib.R.layout.slidingmenumain;
+    }
+
+    /**
+     * Get menu layout
+     * @return menu layout
+     */
+    @Override
+    public int getMenuId() {
+        return com.jeremyfeinstein.slidingmenu.lib.R.id.slidingmenumain;
+    }
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#findViewById(int)

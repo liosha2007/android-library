@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-public class SlidingListActivity extends ListActivity implements SlidingActivityBase {
+public class SlidingListActivity extends ListActivity implements SlidingActivityBase, ILayoutProvider {
 
 	private SlidingActivityHelper mHelper;
 
@@ -25,6 +25,23 @@ public class SlidingListActivity extends ListActivity implements SlidingActivity
 		listView.setId(android.R.id.list);
 		setContentView(listView);
 	}
+
+    /**
+     * Override for customize layout
+     * @return layout id
+     */
+    public int getRootLayout() {
+        return com.jeremyfeinstein.slidingmenu.lib.R.layout.slidingmenumain;
+    }
+
+    /**
+     * Get menu layout
+     * @return menu layout
+     */
+    @Override
+    public int getMenuId() {
+        return com.jeremyfeinstein.slidingmenu.lib.R.id.slidingmenumain;
+    }
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onPostCreate(android.os.Bundle)

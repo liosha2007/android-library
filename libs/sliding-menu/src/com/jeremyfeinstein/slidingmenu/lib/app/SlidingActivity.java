@@ -8,7 +8,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-public class SlidingActivity extends Activity implements SlidingActivityBase {
+public class SlidingActivity extends Activity implements SlidingActivityBase, ILayoutProvider {
 
 	private SlidingActivityHelper mHelper;
 
@@ -21,6 +21,23 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
 		mHelper = new SlidingActivityHelper(this);
 		mHelper.onCreate(savedInstanceState);
 	}
+
+    /**
+     * Override for customize layout
+     * @return layout id
+     */
+    public int getRootLayout() {
+        return com.jeremyfeinstein.slidingmenu.lib.R.layout.slidingmenumain;
+    }
+
+    /**
+     * Get menu layout
+     * @return menu layout
+     */
+    @Override
+    public int getMenuId() {
+        return com.jeremyfeinstein.slidingmenu.lib.R.id.slidingmenumain;
+    }
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onPostCreate(android.os.Bundle)
@@ -148,5 +165,4 @@ public class SlidingActivity extends Activity implements SlidingActivityBase {
 		if (b) return b;
 		return super.onKeyUp(keyCode, event);
 	}
-
 }

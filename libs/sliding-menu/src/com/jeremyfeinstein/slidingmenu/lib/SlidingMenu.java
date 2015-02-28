@@ -23,6 +23,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -303,8 +304,11 @@ public class SlidingMenu extends RelativeLayout {
 		if (slideStyle != SLIDING_WINDOW && slideStyle != SLIDING_CONTENT)
 			throw new IllegalArgumentException("slideStyle must be either SLIDING_WINDOW or SLIDING_CONTENT");
 
-		if (getParent() != null)
-			throw new IllegalStateException("This SlidingMenu appears to already be attached");
+        View viewToAdd = this;
+		if (viewToAdd.getParent() != null) {
+                viewToAdd = viewToAdd.getRootView();
+//			throw new IllegalStateException("This SlidingMenu appears to already be attached");
+        }
 
 		// get the window background
 		TypedArray a = activity.getTheme().obtainStyledAttributes(new int[] {android.R.attr.windowBackground});
@@ -319,7 +323,7 @@ public class SlidingMenu extends RelativeLayout {
 			// save ActionBar themes that have transparent assets
 			decorChild.setBackgroundResource(background);
 			decor.removeView(decorChild);
-			decor.addView(this);
+			decor.addView(viewToAdd);
 			setContent(decorChild);
 			break;
 		case SLIDING_CONTENT:
@@ -328,7 +332,7 @@ public class SlidingMenu extends RelativeLayout {
 			ViewGroup contentParent = (ViewGroup)activity.findViewById(android.R.id.content);
 			View content = contentParent.getChildAt(0);
 			contentParent.removeView(content);
-			contentParent.addView(this);
+			contentParent.addView(viewToAdd);
 			setContent(content);
 			// save people from having transparent backgrounds
 			if (content.getBackground() == null)
