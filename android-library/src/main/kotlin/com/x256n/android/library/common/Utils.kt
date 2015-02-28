@@ -32,9 +32,9 @@ public object Utils {
      */
     platformStatic public fun <T: Any> or(source: T?, target: T?): T? = source ?: target
 
-    platformStatic public fun <T: View> view(view: View?, resourceId: Int?): T? = if (resourceId == null || view == null) null else view.findViewById(resourceId) as? T
+    platformStatic public fun <T: View> view(view: View, resourceId: Int): T = view.findViewById(resourceId) as T
 
-    platformStatic public fun <T: View> view(activity: Activity, resourceId: Int): T? = activity.findViewById(resourceId) as? T
+    platformStatic public fun <T: View> view(activity: Activity, resourceId: Int): T = activity.findViewById(resourceId) as T
 
     platformStatic public fun err(message: String): Int = Log.e(LOG_TAG, "Application error: ${message}")
 

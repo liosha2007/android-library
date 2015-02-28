@@ -8,8 +8,8 @@ import com.x256n.android.library.view.ActivityView;
 /**
  * @author liosha (22.02.2015)
  */
-public abstract class ActivityController<V extends ActivityView> extends BaseActivityController<ActivityView, ActivityController> {
-    private final V view;
+public abstract class ActivityController<V extends ActivityView> extends BaseActivityController<ActivityView> {
+    protected final V view;
 
     @SuppressWarnings("unchecked")
     public ActivityController(V view) {
@@ -20,6 +20,14 @@ public abstract class ActivityController<V extends ActivityView> extends BaseAct
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         view.onCreate();
+    }
+
+    /**
+     * Override for customize layout
+     * @return layout id
+     */
+    public int getRootLayout() {
+        return view.getRootLayout();
     }
 
     @Override

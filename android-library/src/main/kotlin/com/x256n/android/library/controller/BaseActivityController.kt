@@ -7,11 +7,12 @@ import android.content.Intent
 import com.x256n.android.library.common.Utils
 import com.x256n.android.library.view.ActivityView
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity
+import android.app.Activity
 
 /**
  * @author liosha (13.02.2015)
  */
-public abstract class BaseActivityController<V, C> : SlidingFragmentActivity() {
+public abstract class BaseActivityController<V> : SlidingFragmentActivity() {
     protected abstract val view: V
 
     public override fun onSaveInstanceState(storage: Bundle) {
@@ -35,17 +36,17 @@ public abstract class BaseActivityController<V, C> : SlidingFragmentActivity() {
         overridePendingTransition(newActivityAnimation, oldActivityAnimation)
     }
 
-    public fun run(clazz: Class<C>): Unit = run(clazz, null, 0, 0)
+    public fun <C: Activity> run(clazz: Class<C>): Unit = run(clazz, null, 0, 0)
 
-    public fun run(clazz: Class<C>, newActivityAnimation: Int, oldActivityAnimation: Int): Unit = run(clazz, null, newActivityAnimation, oldActivityAnimation)
+    public fun <C: Activity> run(clazz: Class<C>, newActivityAnimation: Int, oldActivityAnimation: Int): Unit = run(clazz, null, newActivityAnimation, oldActivityAnimation)
 
-    public fun run(clazz: Class<C>, bundle: Bundle): Unit = run(clazz, bundle, 0)
+    public fun <C: Activity> run(clazz: Class<C>, bundle: Bundle): Unit = run(clazz, bundle, 0)
 
-    public fun run(clazz: Class<C>, bundle: Bundle, newActivityAnimation: Int): Unit = run(clazz, bundle, newActivityAnimation, 0)
+    public fun <C: Activity> run(clazz: Class<C>, bundle: Bundle, newActivityAnimation: Int): Unit = run(clazz, bundle, newActivityAnimation, 0)
 
-    public fun run(clazz: Class<C>, newActivityAnimation: Int): Unit = run(clazz, null, newActivityAnimation, 0)
+    public fun <C: Activity> run(clazz: Class<C>, newActivityAnimation: Int): Unit = run(clazz, null, newActivityAnimation, 0)
 
-    protected fun run(clazz: Class<C>, bundle: Bundle?, newActivityAnimation: Int, oldActivityAnimation: Int) {
+    protected fun <C: Activity> run(clazz: Class<C>, bundle: Bundle?, newActivityAnimation: Int, oldActivityAnimation: Int) {
         val intent = Intent(this, clazz)
         if (bundle != null) {
             intent.putExtras(bundle)

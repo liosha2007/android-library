@@ -15,7 +15,6 @@ public abstract class BaseActivityView<C : Activity> {
     protected abstract val controller: C
     protected abstract val menuLayoutId: Int
     protected abstract val layoutId: Int
-    protected abstract var view: View
-    public fun <T : View> view(viewId: Int?): T? = Utils.view(view, viewId)
+    public open fun <T : View> view(viewId: Int): T = Utils.view(controller, viewId)
     public fun <T : View> inflate(viewId: Int): T? = controller.getLayoutInflater().inflate(viewId, null) as? T
 }

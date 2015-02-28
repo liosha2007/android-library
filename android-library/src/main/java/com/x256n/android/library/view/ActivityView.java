@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.x256n.android.library.R;
+import com.x256n.android.library.common.Utils;
 import com.x256n.android.library.controller.ActivityController;
 import com.x256n.android.library.fragment.controller.FragmentController;
 
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 /**
  * @author liosha (22.02.2015)
  */
@@ -24,7 +27,6 @@ public abstract class ActivityView<C extends ActivityController> extends BaseAct
     private final int layoutId;
     private final boolean configureForFragments;
     protected C controller;
-    protected View view;
 
     public ActivityView(int layoutId, int menuLayoutId) {
         this(layoutId, menuLayoutId, false);
@@ -56,11 +58,11 @@ public abstract class ActivityView<C extends ActivityController> extends BaseAct
     }
 
     public void onCreate() {
+        ButterKnife.inject(this, controller);
         if (!configureForFragments) {
             controller.setContentView(layoutId);
         }
         controller.setBehindContentView(menuLayoutId);
-        setView(controller.findViewById(android.R.id.content));
         SlidingMenu slidingMenu = controller.getSlidingMenu();
         customizeSlidingMenu(slidingMenu);
 
@@ -150,12 +152,15 @@ public abstract class ActivityView<C extends ActivityController> extends BaseAct
 
     @NotNull
     @Override
-    protected View getView() {
-        return view;
+    public <T extends View> T view(int viewId) {
+        return (T) (configureForFragments ? Utils.view(controller.getSlidingMenu().getRootView(), viewId) : super.view(viewId));
     }
 
-    @Override
-    protected void setView(@NotNull View view) {
-        this.view = view;
+    /**
+     * Override for customize layout
+     * @return layout id
+     */
+    public int getRootLayout() {
+        return 0; // Will be used default layout
     }
 }
