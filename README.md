@@ -2,10 +2,13 @@ android-library
 ===============
 
 My library for develop android applications
+Based on sliding-menu project
 
 ./gradlew.bat - wrapper for windows
 ./gradlew - wrapper for linux
 ./gradle - directory with wrapper
+
+## Set up environment variables JAVA8_HOME and JAVA6_HOME
 
 `gradlew tasks` - show all available tasks
 `gradlew clean` - clean project

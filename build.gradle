@@ -1,21 +1,68 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
     repositories {
-        jcenter()
+        mavenLocal()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:0.10.770'
-        classpath 'com.github.dcendents:android-maven-plugin:1.2'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'me.tatarka:gradle-retrolambda:2.5.0'
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'retrolambda'
+
+dependencies {
+    compile fileTree('libs/Lightweight-Stream-API.jar')
+    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.loopj.android:android-async-http:1.4.6'
+    compile 'com.squareup.retrofit:converter-jackson:1.2.2'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+    compile('com.google.android.gms:play-services:6.5.87') {
+        exclude module: 'support-v4'
+        exclude group: 'com.google.android', module: 'android'
+    }
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 21
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+
+            manifest.srcFile 'AndroidManifest.xml'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
