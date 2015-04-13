@@ -1,12 +1,14 @@
 
+version = '1.2.0'
+
 buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'me.tatarka:gradle-retrolambda:2.5.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.0.1'
     }
 }
 
@@ -16,13 +18,13 @@ repositories {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'retrolambda'
+apply plugin: 'me.tatarka.retrolambda'
 
 dependencies {
     compile fileTree('libs/Lightweight-Stream-API.jar')
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:support-v4:22.0.0'
     compile 'com.loopj.android:android-async-http:1.4.6'
     compile 'com.squareup.retrofit:converter-jackson:1.2.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
@@ -47,6 +49,11 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 21
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
     }
 
     sourceSets {
