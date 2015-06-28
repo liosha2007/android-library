@@ -35,6 +35,27 @@ public abstract class FragmentController<T extends FragmentView> extends Fragmen
         return view.onCreateView(inflater, container, savedInstanceState);
     }
 
+    /**
+     * // DO NOT USE VIEW ELEMENTS - IT DOES NOT CREATED
+     * @param savedInstanceState
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // DO NOT USE VIEW ELEMENTS - IT DOES NOT CREATED
+    }
+
+    /**
+     * USE THIS METHOD TO INITIALIZE VIEWS!!!
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // USE THIS METHOD TO INITIALIZE VIEWS!!!
+    }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

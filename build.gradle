@@ -1,10 +1,20 @@
 
-version = '1.2.0'
+//def MAVEN_LOCAL_PATH = 'file:///Users/XXXX/.m2/repository'
+def VERSION_NAME = '1.2.0'
+def GROUP_ID = 'com.x256n.android.library'
+def ARTIFACT_ID = 'android-library'
 
 buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter {
+            url "http://jcenter.bintray.com"
+        }
+        maven {
+            url "https://repo1.maven.org/maven2"
+        }
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.1.0'
@@ -15,16 +25,23 @@ buildscript {
 repositories {
     mavenLocal()
     mavenCentral()
+    jcenter {
+        url "http://jcenter.bintray.com"
+    }
+    maven {
+        url "https://repo1.maven.org/maven2"
+    }
+    jcenter()
 }
 
+apply plugin: 'maven'
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 
 dependencies {
-    compile fileTree('libs/Lightweight-Stream-API.jar')
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.android.support:support-v4:22.2.0'
     compile 'com.loopj.android:android-async-http:1.4.6'
     compile 'com.squareup.retrofit:converter-jackson:1.2.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
@@ -48,7 +65,7 @@ android {
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 22
     }
 
     packagingOptions {
@@ -73,3 +90,22 @@ android {
         abortOnError false
     }
 }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+//            repository(url: MAVEN_LOCAL_PATH)
+            pom.groupId = GROUP_ID
+            pom.artifactId = ARTIFACT_ID
+            pom.version = VERSION_NAME
+        }
+    }
+}
+
+//
+//install {
+//    repositories.mavenInstaller {
+//        pom.version = version
+//        pom.artifactId = 'android-library'
+//    }
+//}

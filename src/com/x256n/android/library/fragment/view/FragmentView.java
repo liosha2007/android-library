@@ -22,7 +22,11 @@ public abstract class FragmentView<T extends FragmentController> {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return container == null ? null : (this.view = inflater.inflate(this.layoutId, container, false));
+        if (container == null) {
+            return null;
+        }
+        this.view = inflater.inflate(this.layoutId, container, false);
+        return this.view;
     }
 
     public void onCreate() {
@@ -36,12 +40,25 @@ public abstract class FragmentView<T extends FragmentController> {
      * @param <T>
      * @return
      */
+    @Deprecated
     public <T extends View> T view(int id) {
         if (view == null) {
             Log.e(Utils.LOG_TAG, "view is null");
             return null;
         }
         return (T) Utils.view(view, id);
+    }
+
+    public <T extends View> boolean view(int resourceId, Class<T> clazz, Utils.IViewSuccess<T> successCallback, Utils.IViewFail failCallback) {
+        return Utils.view(view, resourceId, clazz, successCallback, failCallback);
+    }
+
+    public <T extends View> boolean view(int resourceId, Class<T> clazz, Utils.IViewSuccess<T> successCallback) {
+        return Utils.view(view, resourceId, clazz, successCallback);
+    }
+
+    public <T extends View> boolean view(int resourceId, Utils.IViewSuccess<T> successCallback) {
+        return Utils.view(view, resourceId, null, successCallback);
     }
 
     public void setController(T controller) {

@@ -31,26 +31,94 @@ public final class Utils {
         return source == null ? target : source;
     }
 
+    @Deprecated
     @SuppressWarnings("unchecked")
     public static <T extends View> T view(View view, int resourceId) {
         return (T) view.findViewById(resourceId);
     }
 
     @SuppressWarnings("unchecked")
+    public static <T extends View> boolean view(View view, int resourceId, Class<T> clazz, IViewSuccess<T> successCallback) {
+        return view(view, resourceId, clazz, successCallback, new IViewFail() {
+            @Override
+            public void fail(Integer resourceId, String message) {
+                Utils.err("Resource ID: " + resourceId + " Message: " + message);
+            }
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends View> boolean view(View view, int resourceId, Class<T> clazz, IViewSuccess<T> successCallback, IViewFail failCallback) {
+        if (view != null) {
+            final View foundView = view.findViewById(resourceId);
+            if (foundView == null && failCallback != null) {
+                failCallback.fail(resourceId, "View not found!");
+            } else if (foundView != null) {
+                if ((clazz != null && clazz.isInstance(foundView)) || (clazz == null && View.class.isInstance(foundView))) {
+                    successCallback.success((T) foundView);
+                } else if (failCallback != null) {
+                    failCallback.fail(resourceId, "Incompatibility class type: " + foundView.getClass().getName());
+                }
+            }
+        } else if (failCallback != null) {
+            failCallback.fail(resourceId, "Parent view is null");
+        }
+        return false;
+    }
+
+    @Deprecated
+    @SuppressWarnings("unchecked")
     public static <T extends View> T view(Activity activity, int resourceId) {
         return (T) activity.findViewById(resourceId);
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T extends View> boolean view(Activity activity, int resourceId, Class<T> clazz, IViewSuccess<T> successCallback) {
+        return view(activity, resourceId, clazz, successCallback, new IViewFail() {
+            @Override
+            public void fail(Integer resourceId, String message) {
+                Utils.err("Resource ID: " + resourceId + " Message: " + message);
+            }
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends View> boolean view(Activity activity, int resourceId, Class<T> clazz, IViewSuccess<T> successCallback, IViewFail failCallback) {
+        if (activity != null) {
+            final View foundView = activity.findViewById(resourceId);
+            if (foundView == null && failCallback != null) {
+                failCallback.fail(resourceId, "View not found!");
+            } else if (foundView != null) {
+                if ((clazz != null && clazz.isInstance(foundView)) || (clazz == null && View.class.isInstance(foundView))) {
+                    successCallback.success((T) foundView);
+                } else if (failCallback != null) {
+                    failCallback.fail(resourceId, "Incompatibility class type: " + foundView.getClass().getName());
+                }
+            }
+        } else if (failCallback != null) {
+            failCallback.fail(resourceId, "Parent activity is null");
+        }
+        return false;
+    }
+
+    public static interface IViewSuccess<T extends View> {
+        void success(T view);
+    }
+
+    public static interface IViewFail {
+        void fail(Integer resourceId, String message);
+    }
+
     public static int err(String message) {
-        return Log.e(LOG_TAG, "Application error: ${message}");
+        return Log.e(LOG_TAG, "Application error: " + message);
     }
 
     public static int deb(String message) {
-        return Log.d(LOG_TAG, "Application error: ${message}");
+        return Log.d(LOG_TAG, "Application error: " + message);
     }
 
     public static int war(String message) {
-        return Log.w(LOG_TAG, "Application error: ${message}");
+        return Log.w(LOG_TAG, "Application error: " + message);
     }
 
     public static int makeID() {
@@ -109,7 +177,7 @@ public final class Utils {
             throw new Exception("context is null");
         }
         NetworkInfo networkInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        return networkInfo == null || !networkInfo.isConnected() || !networkInfo.isRoaming();
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public static String makeDisplayInfo(Context context) throws Exception {

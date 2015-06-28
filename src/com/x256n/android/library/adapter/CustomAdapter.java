@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -103,6 +105,15 @@ public class CustomAdapter<T> extends BaseAdapter {
                 if (onItemSelectedListener instanceof ItemSelectListener) {
                     ((ItemSelectListener<T>) onItemSelectedListener).onNothingSelected(parent);
                 }
+            }
+        });
+    }
+
+    public void setOnItemClicked(AbsListView listView, final IItemSelectedListener<T> onItemSelectedListener) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onItemSelectedListener.onItemSelected(parent, view, position, id, data.get(position).item);
             }
         });
     }

@@ -20,16 +20,20 @@ import butterknife.ButterKnife;
  * @author liosha (22.02.2015)
  */
 public abstract class ActivityView<C extends ActivityController> {
-    private final int menuLayoutId;
+    private final Integer menuLayoutId;
     private final int layoutId;
     private final boolean configureForFragments;
     protected C controller;
 
-    public ActivityView(int layoutId, int menuLayoutId) {
+    public ActivityView(int layoutId) {
+        this(layoutId, null, false);
+    }
+
+    public ActivityView(int layoutId, Integer menuLayoutId) {
         this(layoutId, menuLayoutId, false);
     }
 
-    public ActivityView(int layoutId, int menuLayoutId, boolean configureForFragments) {
+    public ActivityView(int layoutId, Integer menuLayoutId, boolean configureForFragments) {
         this.layoutId = layoutId;
         this.menuLayoutId = menuLayoutId;
         this.configureForFragments = configureForFragments;
@@ -47,7 +51,7 @@ public abstract class ActivityView<C extends ActivityController> {
         return layoutId;
     }
 
-    public int getMenuLayoutId() {
+    public Integer getMenuLayoutId() {
         return menuLayoutId;
     }
 
@@ -56,16 +60,23 @@ public abstract class ActivityView<C extends ActivityController> {
         if (!configureForFragments) {
             controller.setContentView(layoutId);
         }
-        controller.setBehindContentView(menuLayoutId);
-        SlidingMenu slidingMenu = controller.getSlidingMenu();
-        customizeSlidingMenu(slidingMenu);
+        if (menuLayoutId != null) {
+            controller.setBehindContentView(menuLayoutId);
+            SlidingMenu slidingMenu = controller.getSlidingMenu();
+            customizeSlidingMenu(slidingMenu);
+        } else {
+            controller.setBehindContentView(R.layout.slidingmenumain);
+        }
 
         if (configureForFragments) {
             ViewPager viewPager = new ViewPager(controller);
             configureFragments(viewPager);
         }
-
-        controller.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        if (menuLayoutId != null) {
+            controller.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            controller.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
     }
 
     /**
@@ -148,6 +159,30 @@ public abstract class ActivityView<C extends ActivityController> {
             view = Utils.view(controller.getSlidingMenu().getRootView(), viewId);
         }
         return view;
+    }
+
+    public <T extends View> boolean view(int resourceId, Class<T> clazz, Utils.IViewSuccess<T> successCallback, Utils.IViewFail failCallback) {
+        if (Utils.view(controller, resourceId) == null) {
+            return Utils.view(controller.getSlidingMenu().getRootView(), resourceId, clazz, successCallback, failCallback);
+        } else {
+            return Utils.view(controller, resourceId, clazz, successCallback, failCallback);
+        }
+    }
+
+    public <T extends View> boolean view(int resourceId, Class<T> clazz, Utils.IViewSuccess<T> successCallback) {
+        if (Utils.view(controller, resourceId) == null) {
+            return Utils.view(controller.getSlidingMenu().getRootView(), resourceId, clazz, successCallback);
+        } else {
+            return Utils.view(controller, resourceId, clazz, successCallback);
+        }
+    }
+
+    public <T extends View> boolean view(int resourceId, Utils.IViewSuccess<T> successCallback) {
+        if (Utils.view(controller, resourceId) == null) {
+            return Utils.view(controller.getSlidingMenu().getRootView(), resourceId, null, successCallback);
+        } else {
+            return Utils.view(controller, resourceId, null, successCallback);
+        }
     }
 
     /**
