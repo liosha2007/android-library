@@ -14,7 +14,7 @@ import com.x256n.android.library.fragment.controller.FragmentController;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
+//import butterknife.ButterKnife;
 
 /**
  * @author liosha (22.02.2015)
@@ -56,7 +56,7 @@ public abstract class ActivityView<C extends ActivityController> {
     }
 
     public void onCreate() {
-        ButterKnife.inject(this, controller);
+//        ButterKnife.inject(this, controller);
         if (!configureForFragments) {
             controller.setContentView(layoutId);
         }
@@ -106,6 +106,11 @@ public abstract class ActivityView<C extends ActivityController> {
 
         viewPager.setOnPageChangeListener(getFragmentPageChangeListener());
         viewPager.setCurrentItem(0);
+    }
+
+    protected void destroyFragments(ViewPager viewPager) {
+        viewPager.setOnPageChangeListener(null);
+        viewPager.setAdapter(null);
     }
 
     protected ViewPager.OnPageChangeListener getFragmentPageChangeListener() {
@@ -196,5 +201,9 @@ public abstract class ActivityView<C extends ActivityController> {
     @SuppressWarnings("unchecked")
     public <T extends View> T inflate(int viewId) {
         return (T) controller.getLayoutInflater().inflate(viewId, null);
+    }
+
+    public void onDestroy() {
+        controller = null;
     }
 }

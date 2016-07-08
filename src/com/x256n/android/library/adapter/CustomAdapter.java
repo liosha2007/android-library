@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * @author liosha (12.04.2015)
  */
 public class CustomAdapter<T> extends BaseAdapter {
-    protected final LayoutInflater inflater;
+    protected LayoutInflater inflater;
     protected List<AdapterPair<T>> data = new ArrayList<>();
     protected int itemResourceId;
     protected int itemDropDownResourceId;
@@ -109,6 +108,19 @@ public class CustomAdapter<T> extends BaseAdapter {
         });
     }
 
+    public void destroySpinner(Spinner spinner) {
+        if (spinner != null) {
+            spinner.setOnItemSelectedListener(null);
+        }
+    }
+
+    public void destroySpinner(AbsListView spinner) {
+        if (spinner != null) {
+            spinner.setOnItemSelectedListener(null);
+            spinner.setOnItemClickListener(null);
+        }
+    }
+
     public void setOnItemClicked(AbsListView listView, final IItemSelectedListener<T> onItemSelectedListener) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -155,5 +167,11 @@ public class CustomAdapter<T> extends BaseAdapter {
 
     public static abstract class ItemSelectListener<T> implements IItemSelectedListener<T> {
         void onNothingSelected(AdapterView<?> parent) {}
+    }
+
+    public void destroy(){
+        inflater = null;
+        data.clear();
+        binder = null;
     }
 }

@@ -76,4 +76,8 @@ public abstract class FragmentView<T extends FragmentController> {
         return (T) controller.getLayoutInflater(controller.getArguments()).inflate(id, null);
     }
 
+    public void onDestroy() {
+        controller = null;
+        view = null;
+    }
 }

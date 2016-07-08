@@ -12,7 +12,7 @@ import com.x256n.android.library.view.ActivityView;
  * @author liosha (22.02.2015)
  */
 public abstract class ActivityController<V extends ActivityView> extends SlidingFragmentActivity {
-    protected final V view;
+    protected V view;
 
     @SuppressWarnings("unchecked")
     public ActivityController(V view) {
@@ -80,5 +80,12 @@ public abstract class ActivityController<V extends ActivityView> extends Sliding
         startActivity(intent);
         overridePendingTransition(newActivityAnimation, oldActivityAnimation);
         Utils.deb("Activity " + clazz.getSimpleName() + " is started!");
+    }
+
+    @Override
+    protected void onDestroy() {
+        view.onDestroy();
+        view = null;
+        super.onDestroy();
     }
 }

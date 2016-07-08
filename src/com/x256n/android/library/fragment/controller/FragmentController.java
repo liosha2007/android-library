@@ -105,4 +105,11 @@ public abstract class FragmentController<T extends FragmentView> extends Fragmen
         super.setArguments(args);
         return (T) this;
     }
+
+    @Override
+    public void onDestroy() {
+        view.onDestroy();
+        view = null;
+        super.onDestroy();
+    }
 }
